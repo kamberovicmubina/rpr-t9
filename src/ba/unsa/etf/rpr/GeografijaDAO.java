@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class GeografijaDAO {
     private static GeografijaDAO instance = null;
     private Connection conn = null;
-    private Statement statement;
+    private Statement drzavaStatement;
     private static void initialize() {
         instance = new GeografijaDAO();
     }
@@ -16,7 +16,7 @@ public class GeografijaDAO {
     private GeografijaDAO () {
         try {
             conn = DriverManager.getConnection("jdbc:sqlite:baza.db" );
-            statement = conn.createStatement();
+           // statement = conn.createStatement();
             /*String strSelect = "select naziv, broj_stanovnika from Grad";
             System.out.println("The SQL query is: " + strSelect);
             System.out.println();
@@ -35,6 +35,12 @@ public class GeografijaDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        pripremiUpite();
+    }
+
+    private void pripremiUpite () {
+        drzavaStatement = conn.prepareStatement("select id, naziv, glavniGrad from drzava where id=?");
+
     }
     Grad glavniGrad(String drzava) {
         return null;

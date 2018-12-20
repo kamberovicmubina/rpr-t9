@@ -15,6 +15,7 @@ public class Main {
         System.out.println("Unesite naziv drzave: ");
         Scanner sc = new Scanner(System.in);
         String ime = sc.nextLine();
+
     }
 
     public static String ispisiGradove () {
