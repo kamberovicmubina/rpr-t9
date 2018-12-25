@@ -132,7 +132,15 @@ public class GeografijaDAO {
         }
     }
     void dodajDrzavu(Drzava drzava) {
+        ubaciDrzavuStm.clearParameters();
+        try  {
+            ubaciDrzavuStm.setInt(1, drzava.getId());
+            ubaciDrzavuStm.setString(2, drzava.getNaziv());
+            ubaciDrzavuStm.setInt(3, drzava.getGlavniGrad().getId());
+            ubaciDrzavuStm.executeUpdate();
+        } catch (SQLException e) {
 
+        }
     }
     void izmijeniGrad(Grad grad) {
 

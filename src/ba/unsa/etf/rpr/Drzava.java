@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Drzava implements Serializable {
     private String naziv;
     private Grad glavniGrad;
+    private int id;
 
     public int getId() {
         return id;
@@ -13,8 +14,6 @@ public class Drzava implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
-    private int id;
 
     public Drzava (int id, String naziv, Grad glavniGrad) {
         this.id = id;
