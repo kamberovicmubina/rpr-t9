@@ -120,8 +120,9 @@ public class GeografijaDAO {
         return gradovi;
     }
     void dodajGrad(Grad grad){
-        ubaciGradStm.clearParameters();
+
         try {
+            ubaciGradStm.clearParameters();
             ubaciGradStm.setInt(1, grad.getId());
             ubaciGradStm.setString(2, grad.getNaziv());
             ubaciGradStm.setInt(3, grad.getBrojStanovnika());
@@ -132,8 +133,9 @@ public class GeografijaDAO {
         }
     }
     void dodajDrzavu(Drzava drzava) {
-        ubaciDrzavuStm.clearParameters();
+
         try  {
+            ubaciDrzavuStm.clearParameters();
             ubaciDrzavuStm.setInt(1, drzava.getId());
             ubaciDrzavuStm.setString(2, drzava.getNaziv());
             ubaciDrzavuStm.setInt(3, drzava.getGlavniGrad().getId());
@@ -144,6 +146,15 @@ public class GeografijaDAO {
     }
     void izmijeniGrad(Grad grad) {
 
+        try {
+            editGradStm.clearParameters();
+            editGradStm.setString(1, grad.getNaziv());
+            editGradStm.setInt(2, grad.getBrojStanovnika());
+            editGradStm.setInt(3, grad.getId());
+            editGradStm.executeUpdate();
+        } catch(SQLException e) {
+
+        }
     }
     Drzava nadjiDrzavu(String drzava) {
         return null;

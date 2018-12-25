@@ -16,6 +16,13 @@ public class Grad implements Serializable {
         this.id = id;
     }
 
+    public Grad () {
+        naziv = "";
+        brojStanovnika = 0;
+        drzava = null;
+        id = 0;
+    }
+
     public Grad (int id, String naziv, int brojStanovnika, Drzava drzava) {
         this.id = id;
         this.naziv = naziv;

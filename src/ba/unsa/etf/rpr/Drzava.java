@@ -15,6 +15,12 @@ public class Drzava implements Serializable {
         this.id = id;
     }
 
+    public Drzava () {
+        naziv = "";
+        glavniGrad = null;
+        id = 0;
+    }
+
     public Drzava (int id, String naziv, Grad glavniGrad) {
         this.id = id;
         this.naziv = naziv;
