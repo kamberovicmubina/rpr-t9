@@ -5,6 +5,15 @@ import java.io.Serializable;
 public class Drzava implements Serializable {
     private String naziv;
     private Grad glavniGrad;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private int id;
 
     public Drzava (int id, String naziv, Grad glavniGrad) {

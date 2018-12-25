@@ -120,7 +120,16 @@ public class GeografijaDAO {
         return gradovi;
     }
     void dodajGrad(Grad grad){
+        ubaciGradStm.clearParameters();
+        try {
+            ubaciGradStm.setInt(1, grad.getId());
+            ubaciGradStm.setString(2, grad.getNaziv());
+            ubaciGradStm.setInt(3, grad.getBrojStanovnika());
+            ubaciGradStm.setInt(4, grad.getDrzava().getId());
+            ubaciGradStm.executeUpdate();
+        } catch(SQLException e) {
 
+        }
     }
     void dodajDrzavu(Drzava drzava) {
 
