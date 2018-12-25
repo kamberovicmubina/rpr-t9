@@ -6,6 +6,14 @@ public class Grad implements Serializable {
     private String naziv;
     private int brojStanovnika;
     private Drzava drzava;
+    private int id;
+
+    public Grad (int id, String naziv, int brojStanovnika, Drzava drzava) {
+        this.id = id;
+        this.naziv = naziv;
+        this.brojStanovnika = brojStanovnika;
+        this.drzava = drzava;
+    }
 
     public String getNaziv() {
         return naziv;
