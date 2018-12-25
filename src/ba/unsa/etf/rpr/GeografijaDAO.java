@@ -157,7 +157,30 @@ public class GeografijaDAO {
         }
     }
     Drzava nadjiDrzavu(String drzava) {
-        return null;
+        Drzava d = new Drzava();
+        try {
+            drzavaByNazivStm.clearParameters();
+            drzavaByNazivStm.setString(1, drzava);
+            ResultSet rs = drzavaByNazivStm.executeQuery();
+            while (rs.next()) {
+                d.setId(rs.getInt(1));
+                d.setNaziv(rs.getString(2));;
+                Grad g = new Grad ();
+                glavniGradStm.clearParameters();
+                glavniGradStm.setString(1, rs.getString(2));
+                ResultSet rs2 = glavniGradStm.executeQuery();
+                while (rs2.next()) {
+                    g.setId(rs2.getInt(1));
+                    g.setNaziv(rs2.getString(2));
+                    g.setBrojStanovnika(rs2.getInt(3));
+                    g.setDrzava(d);
+                }
+                d.setGlavniGrad(g);
+            }
+        } catch (SQLException e) {
+
+        }
+        return d;
     }
     static void removeInstance () {
         instance = null;
