@@ -19,23 +19,9 @@ public class GeografijaDAO {
         try {
             //conn = DriverManager.getConnection("jdbc:sqlite:baza.db" );
             conn = DriverManager.getConnection("\"jdbc:oracle:thin:@ora.db.lab.ri.etf.unsa.ba:1521:ETFLAB\",\"MK18290\",\"r2Cjv03n\"");
-           // statement = conn.createStatement();
-            /*String strSelect = "select naziv, broj_stanovnika from Grad";
-            System.out.println("The SQL query is: " + strSelect);
-            System.out.println();
 
-            ResultSet rset = statement.executeQuery(strSelect);
-            System.out.println("The records selected are:");
-            int rowCount = 0;
-            while(rset.next()) {
-                String title = rset.getString("title");
-                double price = rset.getDouble("price");
-                int    qty   = rset.getInt("qty");
-                System.out.println(title + ", " + price + ", " + qty);
-                ++rowCount;
-            }
-            System.out.println("Total number of records = " + rowCount);*/
         } catch (SQLException e) {
+            // kreiraj bazu
             e.printStackTrace();
         }
         try {
