@@ -36,10 +36,10 @@ public class IzgledController implements Initializable {
         idSpinner.setValueFactory(valueFactory);
 
         SpinnerValueFactory<Integer> valueFactory2 = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100000000);
-        brStSpinner.setValueFactory(valueFactory);
+        brStSpinner.setValueFactory(valueFactory2);
 
         SpinnerValueFactory<Integer> valueFactory3 = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10000);
-        idDrzavaSpinner.setValueFactory(valueFactory);
+        idDrzavaSpinner.setValueFactory(valueFactory3);
 
         nazivGradaTxt.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -59,7 +59,7 @@ public class IzgledController implements Initializable {
         nazivDrzaveGradTxt.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> obs, String o, String n) {
-                    if (validanNaziv(nazivDrzaveGradTxt.getText())) {
+                    if (validanNaziv(nazivDrzaveGradTxt.getText()) && ge.nadjiDrzavu(nazivDrzaveGradTxt.getText()) != null) {
                         nazivDrzaveGradTxt.getStyleClass().removeAll("poljeNijeIspravno");
                         nazivDrzaveGradTxt.getStyleClass().add("poljeIspravno");
                         gDrzava = true;
@@ -124,7 +124,7 @@ public class IzgledController implements Initializable {
     }
 
     public boolean validnaDrzava () {
-        return dNaziv && dGlGrad;
+        return dNaziv && dGlGrad; // provjeriti za glavni grad da li postoji(validcija)
     }
 
     public void azuriraj () {
@@ -138,16 +138,19 @@ public class IzgledController implements Initializable {
 
     public void dodajGrad () {
         if (validanGrad()) {
+            // osigurali smo da grad nece biti validan ako vec nismo prije unijeli drzavu
             Grad g = new Grad(idSpinner.getValue(), nazivGradaTxt.getText(), brStSpinner.getValue(), null);
+            Drzava d = ge.nadjiDrzavu(nazivDrzaveGradTxt.getText());
+            g.setDrzava(d);
             ge.dodajGrad(g);
-            if (ge.nadjiDrzavu(nazivDrzaveGradTxt.getText()) != null) { // vec je registrovana drzava
+          /*  if (ge.nadjiDrzavu(nazivDrzaveGradTxt.getText()) != null) { // vec je registrovana drzava
                 g.setDrzava(ge.nadjiDrzavu(nazivDrzaveGradTxt.getText()));
                 return;
             }
             Drzava d = new Drzava();
             d.setId(idDrzavaSpinner.getValue());
-            d.setNaziv(nazivDrzavaTxt.getText());
-            // glavni grad
+            d.setNaziv(nazivDrzavaTxt.getText());*/
+
         }
     }
 
@@ -170,8 +173,12 @@ public class IzgledController implements Initializable {
     }
 
     public void obrisiDrzavu () {
-        if (validnaDrzava()) {
+        if (validnaDrzava() && ge.nadjiDrzavu(nazivDrzavaTxt.getText()) != null) {
             ge.obrisiDrzavu(nazivDrzavaTxt.getText());
+        } else {
+            nazivDrzavaTxt.getStyleClass().removeAll("Polje ispravno");
+            nazivDrzavaTxt.getStyleClass().add("Polje nije ispravno");
+            dNaziv = false;
         }
     }
 

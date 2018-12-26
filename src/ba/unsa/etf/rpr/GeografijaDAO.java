@@ -27,7 +27,7 @@ public class GeografijaDAO {
             } catch (Exception e) {
                 Statement statement2=null;
                 statement2 = conn.createStatement();
-                statement2.execute("CREATE TABLE grad(id integer primary key, naziv text, broj_stanovnika integer)");
+                statement2.execute("CREATE TABLE grad(id integer primary key, naziv text, broj_stanovnika integer, drzava integer)");
                 statement2.execute("CREATE TABLE drzava(id integer primary key, naziv text, glavni_grad integer unique references grad(id))");
                 statement2.execute("insert into grad (id, naziv, broj_stanovnika, drzava) values (1, \"Pariz\", 2200000, 1);");
                 statement2.execute("insert into grad (id, naziv, broj_stanovnika, drzava) values (2, \"London\", 8136000, 2);");
