@@ -1,0 +1,30 @@
+<component name="libraryTable">
+  <library name="net.sf.jasperreports:jasperreports:6.7.0" type="repository">
+    <properties maven-id="net.sf.jasperreports:jasperreports:6.7.0" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jasperreports-6.7.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-beanutils-1.9.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-collections-3.2.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-digester-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/itext-2.1.7.js6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/bcprov-jdk15on-1.52.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jcommon-1.0.23.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jfreechart-1.0.19.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ecj-4.4.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/castor-xml-1.3.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/castor-core-1.3.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-lang-2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javax.inject-1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/stax-1.2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/stax-api-1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/stax-api-1.0-2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-core-2.9.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-databind-2.9.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-annotations-2.9.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/icu4j-57.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
