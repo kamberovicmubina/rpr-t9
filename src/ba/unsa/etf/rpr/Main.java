@@ -1,12 +1,31 @@
 package ba.unsa.etf.rpr;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
+
+public class Main extends Application {
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        GeografijaDAO ge = GeografijaDAO.getInstance();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("izgled.fxml"));
+        loader.setController(new IzgledController(ge));
+        Parent root = loader.load();
+        primaryStage.setTitle("Pretraga");
+        primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        primaryStage.show();
+    }
+
 
     public static void main(String[] args) {
-        GeografijaDAO.getInstance();
+        launch(args);
         System.out.println("Gradovi su:\n" + ispisiGradove());
         glavniGrad();
         GeografijaDAO.removeInstance();

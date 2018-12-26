@@ -6,7 +6,7 @@ import java.util.Comparator;
 
 public class GeografijaDAO {
     private static GeografijaDAO instance = null;
-    private Connection conn = null;
+    private static Connection conn;
     private PreparedStatement drzavaStatement, glavniGradStm, gradByNazivStm, gradByIdStm, editGradStm, drzavaByNazivStm,
             deleteGradByDrzavaIdStm, deleteDrzavaByNaziv, ubaciDrzavuStm, ubaciGradStm;
     private static void initialize() {
@@ -17,19 +17,67 @@ public class GeografijaDAO {
     }
     private GeografijaDAO () {
         try {
-            //conn = DriverManager.getConnection("jdbc:sqlite:baza.db" );
-            conn = DriverManager.getConnection("\"jdbc:oracle:thin:@ora.db.lab.ri.etf.unsa.ba:1521:ETFLAB\",\"MK18290\",\"r2Cjv03n\"");
-
+            conn = null;
+            conn = DriverManager.getConnection("jdbc:sqlite:baza.db" );
+            //conn = DriverManager.getConnection("\"jdbc:oracle:thin:@ora.db.lab.ri.etf.unsa.ba:1521:ETFLAB\",\"MK18290\",\"r2Cjv03n\"");
+            Statement statement = null;
+            try {
+                statement = conn.createStatement();
+                statement.execute("select id, naziv, glavni_grad from drzava;");
+            } catch (Exception e) {
+                Statement statement2=null;
+                statement2 = conn.createStatement();
+                statement2.execute("CREATE TABLE grad(id integer primary key, naziv text, broj_stanovnika integer)");
+                statement2.execute("CREATE TABLE drzava(id integer primary key, naziv text, glavni_grad integer unique references grad(id))");
+                statement2.execute("insert into grad (id, naziv, broj_stanovnika, drzava) values (1, \"Pariz\", 2200000, 1);");
+                statement2.execute("insert into grad (id, naziv, broj_stanovnika, drzava) values (2, \"London\", 8136000, 2);");
+                statement2.execute("insert into grad (id, naziv, broj_stanovnika, drzava) values (3, \"Bec\", 1868000, 3);");
+                statement2.execute("insert into grad (id, naziv, broj_stanovnika, drzava) values (4, \"Manchester\", 510746, 4);");
+                statement2.execute("insert into grad (id, naziv, broj_stanovnika, drzava) values (5, \"Graz\", 283869, 5);");
+                statement2.execute("insert into drzava (id, naziv, glavni_grad) values (1, \"Francuska\", 1);");
+                statement2.execute("insert into drzava (id, naziv, glavni_grad) values (2, \"Velika Britanija\", 2);");
+                statement2.execute("insert into drzava (id, naziv, glavni_grad) values (3, \"Austrija\", 3);");
+            }
         } catch (SQLException e) {
-            // kreiraj bazu
             e.printStackTrace();
         }
+
+
+
+
+
+
+
+            // kreiraj bazu
+            /*try {
+                Statement statement = null;
+                statement = conn.createStatement();
+                statement.execute("CREATE TABLE drzava(id INTEGER PRIMARY KEY ,naziv varchar(255) not null, broj_stanovnika integer, glavni_grad integer )");
+                statement.execute("CREATE TABLE grad(id integer primary key, naziv varchar(255), broj_stanovnika INTEGER,drzava integer)");
+
+                /*statement.execute("insert into grad (id, naziv, broj_stanovnika, drzava) values (1, \"Pariz\", 2200000, 1);");
+                statement.execute("insert into grad (id, naziv, broj_stanovnika, drzava) values (2, \"London\", 8136000, 2);");
+                statement.execute("insert into grad (id, naziv, broj_stanovnika, drzava) values (3, \"Bec\", 1868000, 3);");
+                statement.execute("insert into grad (id, naziv, broj_stanovnika, drzava) values (4, \"Manchester\", 510746, 4);");
+                statement = conn.prepareStatement("insert into grad (id, naziv, broj_stanovnika, drzava) values (5, \"Graz\", 283869, 5);");
+
+                statement = conn.prepareStatement("insert into drzava (id, naziv, glavni_grad) values (1, \"Francuska\", 1);");
+                statement.executeQuery();
+                statement = conn.prepareStatement("insert into drzava (id, naziv, glavni_grad) values (2, \"Velika Britanija\", 2);");
+                statement.executeQuery();
+                statement = conn.prepareStatement("insert into drzava (id, naziv, glavni_grad) values (3, \"Austrija\", 3);");
+                statement.executeQuery();
+            } catch (SQLException f) {
+                f.printStackTrace();
+            }
+
+
         try {
             drzavaStatement = conn.prepareStatement("select id, naziv, glavni_grad from drzava where id=?");
         } catch (SQLException e) {
             e.printStackTrace();
 
-        }
+        }*/
         pripremiUpite();
     }
 
@@ -68,7 +116,7 @@ public class GeografijaDAO {
             deleteDrzavaByNaziv.setString(1, drzava);
             ResultSet rs = deleteDrzavaByNaziv.executeQuery();
         } catch (SQLException e) {
-
+            e.printStackTrace();
         }
 
     }
@@ -93,7 +141,7 @@ public class GeografijaDAO {
                 gradovi.add(g);
             }
         } catch (SQLException e) {
-
+            e.printStackTrace();
         }
         gradovi.sort(new Comparator<Grad>() {
             @Override
@@ -115,7 +163,7 @@ public class GeografijaDAO {
             ubaciGradStm.setInt(4, grad.getDrzava().getId());
             ubaciGradStm.executeUpdate();
         } catch(SQLException e) {
-
+            e.printStackTrace();
         }
     }
     void dodajDrzavu(Drzava drzava) {
@@ -127,7 +175,7 @@ public class GeografijaDAO {
             ubaciDrzavuStm.setInt(3, drzava.getGlavniGrad().getId());
             ubaciDrzavuStm.executeUpdate();
         } catch (SQLException e) {
-
+            e.printStackTrace();
         }
     }
     void izmijeniGrad(Grad grad) {
@@ -139,7 +187,7 @@ public class GeografijaDAO {
             editGradStm.setInt(3, grad.getId());
             editGradStm.executeUpdate();
         } catch(SQLException e) {
-
+            e.printStackTrace();
         }
     }
     Drzava nadjiDrzavu(String drzava) {
@@ -164,11 +212,19 @@ public class GeografijaDAO {
                 d.setGlavniGrad(g);
             }
         } catch (SQLException e) {
-
+            e.printStackTrace();
         }
         return d;
     }
     static void removeInstance () {
         instance = null;
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        conn = null;
     }
 }
