@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -23,7 +24,7 @@ public class IzgledController implements Initializable {
     @FXML private TextField glavniGradTxt;
     @FXML private TextField nazivDrzavaTxt;
     @FXML private TextField glavniGradUpis;
-    @FXML private TextField tekst;
+    @FXML private TextArea tekst;
     private boolean gNaziv = false, gDrzava = false, gId, dNaziv = false, dGlGrad = false;
 
     public IzgledController (GeografijaDAO ge) {
@@ -130,7 +131,7 @@ public class IzgledController implements Initializable {
     public void azuriraj () {
         ArrayList<Grad> gradovi = ge.gradovi();
         for (Grad g : gradovi) {
-            if (g.getId() ==  idSpinner.getValue() && validanGrad()) {
+            if (validanGrad() && g.getNaziv().equals(nazivGradaTxt.getText())) {
                 ge.izmijeniGrad(g);
             }
         }
@@ -183,7 +184,16 @@ public class IzgledController implements Initializable {
     }
 
     public void sviGradovi () {
-        Main.ispisiGradove();
+        ArrayList<Grad> gradovi = GeografijaDAO.getInstance().gradovi();
+        String rezultat = "";
+        if (gradovi != null) {
+            for (Grad g : gradovi) {
+                rezultat = rezultat + g.toString() + "\n";
+            }
+            tekst.setText(rezultat);
+        } else {
+            tekst.setText("Nema gradova");
+        }
     }
 
     public void ispisiGlGrad () {

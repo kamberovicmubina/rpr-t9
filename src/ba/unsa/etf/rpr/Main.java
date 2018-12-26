@@ -49,8 +49,12 @@ public class Main extends Application {
     public static String ispisiGradove () {
         ArrayList<Grad> gradovi = GeografijaDAO.getInstance().gradovi();
         String rezultat = "";
-        for (Grad g : gradovi) {
-            rezultat = rezultat + g + "\n";
+        if (gradovi != null) {
+            for (Grad g : gradovi) {
+                rezultat = rezultat + g.toString() + "\n";
+            }
+        } else {
+            System.out.println("Nema gradova");
         }
         return rezultat;
     }

@@ -54,6 +54,13 @@ public class Grad implements Serializable {
         this.drzava = drzava;
     }
 
+    @Override
+    public String toString() {
+        String s = "";
+        if (getDrzava() == null) s = s + getNaziv() + "()" + " - " + getBrojStanovnika() + "\n";
+        else s = getNaziv() + " (" + getDrzava().getNaziv() + ")" + " - " + getBrojStanovnika() + "\n";
+        return s;
+    }
 
 
 
