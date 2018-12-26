@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static javafx.application.Application.launch;
 import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
 
 public class Main extends Application {

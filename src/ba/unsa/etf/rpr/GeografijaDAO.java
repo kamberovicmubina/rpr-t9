@@ -18,8 +18,8 @@ public class GeografijaDAO {
     private GeografijaDAO () {
         try {
             conn = null;
-            conn = DriverManager.getConnection("jdbc:sqlite:baza.db" );
-            //conn = DriverManager.getConnection("\"jdbc:oracle:thin:@ora.db.lab.ri.etf.unsa.ba:1521:ETFLAB\",\"MK18290\",\"r2Cjv03n\"");
+            //conn = DriverManager.getConnection("jdbc:sqlite:baza.db" );
+            conn = DriverManager.getConnection("\"jdbc:oracle:thin:@ora.db.lab.ri.etf.unsa.ba:1521:ETFLAB\",\"MK18290\",\"r2Cjv03n\"");
             Statement statement = null;
             try {
                 statement = conn.createStatement();
