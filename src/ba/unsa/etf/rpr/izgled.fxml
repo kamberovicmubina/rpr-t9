@@ -43,24 +43,24 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Id" GridPane.rowIndex="1" />
-                  <Label text="Naziv" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Label text="%Id" GridPane.rowIndex="1" />
+                  <Label text="%Naziv" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin></Label>
                   <Label text="Broj Stanovnika" GridPane.rowIndex="2" />
-                  <Label text="Drzava" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Label text="%Drzava" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin></Label>
                   <TextField fx:id="nazivGradaTxt" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <TextField fx:id="nazivDrzaveGradTxt" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <Button mnemonicParsing="false" onAction="#azuriraj" text="Azuriraj" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                  <Button mnemonicParsing="false" onAction="#dodajGrad" text="Dodaj" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                  <Button mnemonicParsing="false" onAction="#dodajGrad" text="%Dodaj" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin></Button>
-                  <Label text="GRAD" GridPane.columnSpan="4" />
+                  <Label text="%Grad" GridPane.columnSpan="4" />
                   <Spinner fx:id="idSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Spinner fx:id="brStSpinner" editable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
@@ -81,21 +81,21 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Id" GridPane.rowIndex="1" />
+                  <Label text="%Id" GridPane.rowIndex="1" />
                   <Label text="Glavni Grad" GridPane.rowIndex="2" />
-                  <Label text="Naziv" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Label text="%Naziv" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin></Label>
                   <TextField fx:id="glavniGradTxt" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" onAction="#dodajDrzavu" text="Dodaj" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Button mnemonicParsing="false" onAction="#dodajDrzavu" text="%Dodaj" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#obrisiDrzavu" text="Obrisi" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#obrisiDrzavu" text="%Obrisi" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <TextField fx:id="nazivDrzavaTxt" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <Label text="DRZAVA" GridPane.columnSpan="4" />
+                  <Label text="%Drzava" GridPane.columnSpan="4" />
                   <Spinner fx:id="idDrzavaSpinner" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
                <GridPane.margin>
@@ -104,14 +104,14 @@
             </GridPane>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowSpan="2">
                <children>
-                  <Label text="ISPIS">
+                  <Label text="%Ispis">
                      <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" />
+                        <Insets bottom="10.0" left="10.0" top="10.0" />
                      </VBox.margin>
                   </Label>
                   <CheckBox mnemonicParsing="false" onMouseClicked="#sviGradovi" text="Svi gradovi">
                      <VBox.margin>
-                        <Insets bottom="5.0" left="10.0" />
+                        <Insets bottom="5.0" left="10.0" top="10.0" />
                      </VBox.margin>
                   </CheckBox>
                   <TextField fx:id="glavniGradUpis" onAction="#ispisiGlGrad" promptText="Glavni grad drzave">
@@ -125,6 +125,9 @@
                      </VBox.margin>
                   </TextArea>
                </children>
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
             </VBox>
          </children>
       </GridPane>

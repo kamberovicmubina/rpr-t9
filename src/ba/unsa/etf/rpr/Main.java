@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 import static javafx.application.Application.launch;
@@ -16,7 +18,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         GeografijaDAO ge = GeografijaDAO.getInstance();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("izgled.fxml"));
+        ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        FXMLLoader loader = new FXMLLoader( getClass().getResource(
+                "izgled.fxml" ), bundle);
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("izgled.fxml"));
         loader.setController(new IzgledController(ge));
         Parent root = loader.load();
         primaryStage.setTitle("Pretraga");
@@ -26,6 +31,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        Locale.setDefault(new Locale("bs", "BA"));
         launch(args);
         System.out.println("Gradovi su:\n" + ispisiGradove());
         glavniGrad();
