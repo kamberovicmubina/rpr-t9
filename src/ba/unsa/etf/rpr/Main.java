@@ -51,7 +51,7 @@ public class Main extends Application {
         String rezultat = "";
         if (gradovi != null) {
             for (Grad g : gradovi) {
-                rezultat = rezultat + g.toString() + "\n";
+                rezultat = rezultat + g.toString();
             }
         } else {
             System.out.println("Nema gradova");

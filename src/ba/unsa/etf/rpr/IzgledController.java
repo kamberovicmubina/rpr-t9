@@ -131,8 +131,13 @@ public class IzgledController implements Initializable {
     public void azuriraj () {
         ArrayList<Grad> gradovi = ge.gradovi();
         for (Grad g : gradovi) {
-            if (validanGrad() && g.getNaziv().equals(nazivGradaTxt.getText())) {
-                ge.izmijeniGrad(g);
+            if (validanGrad() && g.getId() == idSpinner.getValue()) {
+                Grad noviGrad = new Grad();
+                noviGrad.setNaziv(nazivGradaTxt.getText());
+                noviGrad.setBrojStanovnika(brStSpinner.getValue());
+                Drzava d = ge.nadjiDrzavu(nazivDrzaveGradTxt.getText());
+                noviGrad.setDrzava(d);
+                ge.izmijeniGrad(noviGrad);
             }
         }
     }
@@ -163,13 +168,15 @@ public class IzgledController implements Initializable {
             ArrayList<Grad> gradovi = ge.gradovi();
             for (Grad g : gradovi) {
                 if (g.getId() == idSpinner.getValue()) {
-                    d.setGlavniGrad(g); // iako se ne bi trebalo desiti da vec postoji grad bez drzave
+                    d.setGlavniGrad(g);
+                    ge.getDrzave().add(d);
                     return;
                 }
             }
             Grad g = new Grad(idSpinner.getValue(), nazivGradaTxt.getText(), brStSpinner.getValue(), null);
             ge.dodajGrad(g);
             d.setGlavniGrad(g);
+            ge.getDrzave().add(d);
         }
     }
 

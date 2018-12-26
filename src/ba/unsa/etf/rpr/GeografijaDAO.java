@@ -11,6 +11,15 @@ public class GeografijaDAO {
     private Connection connection;
     private PreparedStatement statement;
     private ArrayList<Grad> gradovi = new ArrayList<>();
+
+    public ArrayList<Drzava> getDrzave() {
+        return drzave;
+    }
+
+    public void setDrzave(ArrayList<Drzava> drzave) {
+        this.drzave = drzave;
+    }
+
     private ArrayList<Drzava> drzave = new ArrayList<>();
 
     private static void initialize() {
@@ -26,6 +35,10 @@ public class GeografijaDAO {
         File db = new File("baza.db");
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:baza.db");
+            /*prvi zadatak
+                String url = "jdbc:oracle:thin:@ora.db.lab.ri.etf.unsa.ba:1521:ETFLAB";
+                connection = DriverManager.getConnection(url, "MK18290", "r2Cjv03n");
+            */
             statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS  grad (id integer primary key, naziv text, broj_stanovnika integer, drzava integer references drzava)");
             statement.executeUpdate();
             statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS  drzava (id integer primary key, naziv text, glavni_grad integer references grad)");
@@ -113,40 +126,39 @@ public class GeografijaDAO {
                 return grad;
             }
         } catch (SQLException e) {
+
         }
         return null;
     }
 
     public void obrisiDrzavu(String drzava) {
         try {
-            int idDrzave = 0;
-            statement = connection.prepareStatement("SELECT id FROM drzava WHERE naziv = ?");
+            statement = connection.prepareStatement("SELECT g.id FROM grad g, drzava d WHERE g.drzava = d.id AND d.naziv = ?");
             statement.setString(1, drzava);
             ResultSet result = statement.executeQuery();
-            boolean nalaziSe = false;
+            int brojac = 0;
             while (result.next()) {
-                nalaziSe = true;
-                idDrzave = result.getInt(1);
+                int idGrad = result.getInt(1);
+                PreparedStatement podUpit = connection.prepareStatement("DELETE FROM grad WHERE id = ?");
+                podUpit.setInt(1, idGrad);
+                podUpit.executeUpdate();
+                brojac++;
             }
-            if (!nalaziSe) return;
-            statement = connection.prepareStatement("DELETE FROM grad WHERE drzava=?");
-            statement.setInt(1, idDrzave);
-            statement.execute();
-
-            statement = connection.prepareStatement("DELETE FROM drzava WHERE id=?");
-            statement.setInt(1, idDrzave);
-            statement.execute();
-        } catch (SQLException ignored) {
-            System.out.println("Ne postoji drzava!");
+            if (brojac == 0)
+                return;
+            statement = connection.prepareStatement("DELETE FROM drzava WHERE naziv = ?");
+            statement.setString(1, drzava);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     public ArrayList<Grad> gradovi() {
         ArrayList<Grad> gradovi = new ArrayList<>();
         try {
-            statement = connection.prepareStatement("SELECT * FROM grad ORDER BY broj_stanovnika DESC");
+            statement = connection.prepareStatement("SELECT * FROM grad");
             ResultSet result = statement.executeQuery();
-
             while (result.next()) {
                 Grad grad = new Grad();
                 Drzava d = new Drzava();
@@ -157,11 +169,10 @@ public class GeografijaDAO {
                 grad.setId(idGrada);
                 grad.setNaziv(nazivGrada);
                 grad.setBrojStanovnika(brojStanovnika);
-                d.setId(idDrzave); //ostali podaci za drzavu su nebitni sad
+                d.setId(idDrzave);
                 grad.setDrzava(d);
                 gradovi.add(grad);
             }
-
             statement = connection.prepareStatement("SELECT * FROM drzava");
             result = statement.executeQuery();
 
@@ -180,6 +191,7 @@ public class GeografijaDAO {
                         d.setGlavniGrad(grad);
                     }
                 }
+                drzave.add(d);
             }
         } catch (SQLException e) {
             return null;
@@ -211,8 +223,9 @@ public class GeografijaDAO {
                 statement.setInt(1, id);
                 result = statement.executeQuery();
                 id = -1;
-                while (result.next())
+                while (result.next()) {
                     id = result.getInt(1);
+                }
                 Drzava temp = new Drzava();
                 temp.setId(id);
                 grad.setDrzava(temp);
@@ -228,7 +241,6 @@ public class GeografijaDAO {
                 idDrzave = result.getInt(1);
                 imaDrzave = true;
             }
-
             statement = connection.prepareStatement("SELECT id FROM grad ORDER BY id DESC");
             result = statement.executeQuery();
             int idGrada = 0;
@@ -241,14 +253,12 @@ public class GeografijaDAO {
             statement.setInt(1, idGrada);
             statement.setString(2, grad.getNaziv());
             statement.setInt(3, grad.getBrojStanovnika());
-
-            if (!imaDrzave)
+            if (!imaDrzave) {
                 statement.setNull(4, Types.INTEGER);
-            else
+            } else {
                 statement.setInt(4, idDrzave);
+            }
             statement.executeUpdate();
-
-
             if (!imaDrzave) {
                 statement = connection.prepareStatement("SELECT id FROM drzava ORDER BY id DESC");
                 result = statement.executeQuery();
@@ -258,11 +268,15 @@ public class GeografijaDAO {
                     idDrzave++;
                 }
                 idDrzave++;
-                statement = connection.prepareStatement("INSERT INTO drzava VALUES (?, ?, ?)");
-                statement.setInt(1, idDrzave);
-                statement.setString(2, grad.getDrzava().getNaziv());
-                statement.setInt(3, idGrada); //ne mora biti glavni grad
-                statement.executeUpdate();
+                try {
+                    statement = connection.prepareStatement("INSERT INTO drzava VALUES (?, ?, ?)");
+                    statement.setInt(1, idDrzave);
+                    statement.setString(2, grad.getDrzava().getNaziv());
+                    statement.setInt(3, idGrada);
+                    statement.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -309,15 +323,14 @@ public class GeografijaDAO {
                 statement = connection.prepareStatement("INSERT INTO grad VALUES (?, ?, NULL, NULL)");
                 statement.setInt(1, idGrada);
                 statement.setString(2, drzava.getGlavniGrad().getNaziv());
-                //upit.setInt(3, idGrada);
                 statement.executeUpdate();
                 statement = connection.prepareStatement("UPDATE drzava SET glavni_grad = ? WHERE id = ?");
                 statement.setInt(1, idGrada);
                 statement.setInt(2, idDrzave);
                 statement.executeUpdate();
             }
-        } catch (SQLException ignored) {
-            System.out.println("Greska");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -326,14 +339,11 @@ public class GeografijaDAO {
             statement = connection.prepareStatement("UPDATE grad SET naziv = ?, broj_stanovnika = ?, drzava = ? WHERE id = ?");
             statement.setString(1, grad.getNaziv());
             statement.setInt(2, grad.getBrojStanovnika());
-            //Drzava d = nadjiDrzavu(grad.getDrzava().getNaziv());
-            //statement.set
             statement.setInt(3, grad.getDrzava().getId());
             statement.setInt(4, grad.getId());
             statement.executeUpdate();
-            //izmijeniti grad i u gradovima
-        } catch (SQLException ignored) {
-            System.out.println("Nepostojeci grad");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
