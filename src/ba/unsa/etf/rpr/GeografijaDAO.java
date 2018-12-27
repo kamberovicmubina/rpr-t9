@@ -12,6 +12,10 @@ public class GeografijaDAO {
     private PreparedStatement statement;
     private ArrayList<Grad> gradovi = new ArrayList<>();
 
+    public Connection getConnection () {
+        return connection;
+    }
+
     public ArrayList<Drzava> getDrzave() {
         return drzave;
     }
