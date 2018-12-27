@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr;
 
 import java.io.Serializable;
 
+
 public class Drzava implements Serializable {
     private String naziv;
     private Grad glavniGrad;

@@ -5,6 +5,7 @@ create table grad  {
     drzava int
 };
 
+
 insert into grad (id, naziv, broj_stanovnika, drzava) values (1, "Pariz", 2200000, 1);
 insert into grad (id, naziv, broj_stanovnika, drzava) values (2, "London", 8136000, 2);
 insert into grad (id, naziv, broj_stanovnika, drzava) values (3, "Bec", 1868000, 3);

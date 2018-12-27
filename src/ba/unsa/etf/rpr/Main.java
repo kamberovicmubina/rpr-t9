@@ -46,6 +46,7 @@ public class Main extends Application {
         System.out.println("Glavni grad drzave " + ime + " je " + grad.getNaziv() + ".");
     }
 
+
     public static String ispisiGradove () {
         ArrayList<Grad> gradovi = GeografijaDAO.getInstance().gradovi();
         String rezultat = "";

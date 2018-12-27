@@ -109,6 +109,7 @@ public class GeografijaDAO {
             grad.setDrzava(d);
             d.setGlavniGrad(grad);
             boolean nalaziSe = false;
+
             while (rs.next()) {
                 nalaziSe = true;
                 int idGrada = rs.getInt(1);

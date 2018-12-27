@@ -180,6 +180,7 @@ public class IzgledController implements Initializable {
         }
     }
 
+
     public void obrisiDrzavu () {
         if (validnaDrzava() && ge.nadjiDrzavu(nazivDrzavaTxt.getText()) != null) {
             ge.obrisiDrzavu(nazivDrzavaTxt.getText());

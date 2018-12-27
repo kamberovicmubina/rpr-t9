@@ -8,6 +8,7 @@ public class Grad implements Serializable {
     private Drzava drzava;
     private int id;
 
+
     public int getId() {
         return id;
     }
