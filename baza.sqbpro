@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/User/IdeaProjects/rpr-t9/.baza.db" foreign_keys="1"/><window><current_tab id="1"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="125"/><column_width id="3" width="958"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="grad"/><default_encoding codec=""/><browsetable_info data="AAAAAgAAAAgAZwByAGEAZAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//////////AAAAAP////8AAAAMAGQAcgB6AGEAdgBhAAAAAAAAAAAAAAAAAAAAAAAAAAAA//////////8AAAAA/////w=="/></tab_browse><tab_sql><sql name="SQL 1">CREATE TABLE grad(id integer primary key, naziv text, broj_stanovnika integer, drzava integer);
+
+insert into grad (id, naziv, broj_stanovnika, drzava) values (1, &quot;Pariz&quot;, 2200000, 1);
+insert into grad (id, naziv, broj_stanovnika, drzava) values (2, &quot;London&quot;, 8136000, 2);
+insert into grad (id, naziv, broj_stanovnika, drzava) values (3, &quot;Bec&quot;, 1868000, 3);
+insert into grad (id, naziv, broj_stanovnika, drzava) values (4, &quot;Manchester&quot;, 510746, 4);
+insert into grad (id, naziv, broj_stanovnika, drzava) values (5, &quot;Graz&quot;, 283869, 5);
+
+insert into drzava (id, naziv, glavni_grad) values (1, &quot;Francuska&quot;, 1);
+insert into drzava (id, naziv, glavni_grad) values (2, &quot;Velika Britanija&quot;, 2);
+insert into drzava (id, naziv, glavni_grad) values (3, &quot;Austrija&quot;, 3);</sql><current_tab id="0"/></tab_sql></sqlb_project>
